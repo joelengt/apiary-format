@@ -1,0 +1,346 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# ENOVA API DOC
+API DOCUMENTATION
+
+## Products [/products{?page}{?items}]
+Products API CRUD 
+
+### List all the products [GET]
+list all the products with a paginator
+
++ Parameters
+    + page (optional, number, `5`) ... page (`page`)
+    + items (optional, number, `10`) ... Numeric `items` per page
+
++ Request
+    + Headers
+        Content-Type: application/json
+  
++ Response 200
+    + Attributes (object)
+        + status: 200 (number)
+        + data (object)
+            + items: (array)
+                + item (object)
+                    + id: 12 (number)
+                    + name: sample (string)
+                    + color: red (string)
+        + meta (object)
+            + pagination (object)
+                + page: 5 (number),
+                + page_size: 10 (number),
+                + total_pages: 20 (number),
+                + total_items: 200 (number),
+              
+            + links (object)
+                + previous: "/products/4" (string),
+                + self: "/products/5" (string),
+                + next: "/products/6" (string),
+                + first: "/products/1" (string),
+                + last: "/products/33" (string)
+
+    + Headers
+        Content-Type: application/json
+        
+    + Body
+
+        {
+          "status": 200,
+          "data": {
+            "items":  [
+              {
+                "id": 1,
+                "name": "Widget #1",
+                "color": "red"
+              },
+              {
+                "id": 2,
+                "name": "Widget #2",
+                "color": "blue"
+              },
+              {
+                "id": 3,
+                "name": "Widget #3",
+                "color": "green"
+              }
+            ]
+          },
+          "meta": {
+            "pagination": {
+              "page": 5,
+              "page_size": 10,
+              "total_pages": 20,
+              "total_items": 200,
+            },
+            "links": {
+              "previous": "/products/4",
+              "self": "/products/5",
+              "next": "/products/6",
+              "first": "/products/1",
+              "last": "/products/33"
+            }
+          }
+        }
+
+
+### Create a new product [POST]
+Create a new product
+
++ Request
+    + Attributes (object)
+        + name: sample (string)
+        + slug_name: simple-name (string)
+        + price: "10.89" (string)
+
+    + Headers
+        Content-Type: application/json
+        
+    + Body
+
+        {
+            "name": "something special two",
+            "slug_name": "something-special-two",
+            "price": "20.80"
+        }
+        
+
++ Response 201
+    + Attributes (object)
+        + status: 201 (number)
+        + data (object)
+            + item: (object)
+                + id: 123 (number)
+                + name: "sample" (string)
+                + price: 123 (number)
+                + slug_name: "sample" (string)
+
+    + Headers
+        Content-Type: application/json
+        
+    + Body
+
+        {
+            "status": 201,
+            "data": {
+                "item": {
+                    "id": 123,
+                    "name": "Favourite programming language?",
+                    "slug_name": "something-special-two",
+                    "price": "20.80"
+                }
+            }
+        }
+
+
+## Products [/products/{id}]
+Products by id
+
++ Parameters
+    + id (required, number, `12`) ... product (`id`) number
+
+### Get product by id [GET]
+get product by id
+
++ Response 200
+    + Attributes (object)
+        + status: 201 (number)
+        + data (object)
+            + item: (object)
+                + id: 123 (number)
+                + name: "sample" (string)
+                + price: 123 (number)
+                + slug_name: "sample" (string)
+
+                
+    + Headers
+        Content-Type: application/json
+    
+    + Body
+
+        {
+            "status": 200,
+            "data": {
+                "item": {
+                    "id": 123,
+                    "name": "Favourite programming language?",
+                    "slug-name": "something-special-two",
+                    "price": "20.80"
+                }
+            }
+        }
+
+### Update product by id [PUT]
+update product by id
+
++ Request
+    + Attributes (object)
+        + name: "sample" (string)
+        + price: 123 (number)
+        + slug_name: "sample" (string)
+        + is_active: true (boolean)
+
+    + Headers
+        Content-Type: application/json
+        
+    + Body
+
+        {
+            "name": "something special",
+            "slug-name": "something-special",
+            "is_active": true
+        }
+
++ Response 200
+    + Attributes (object)
+        + status: 201 (number)
+        + data (object)
+            + item: (object)
+                + id: 123 (number)
+                + name: "sample" (string)
+                + price: 123 (number)
+                + slug_name: "sample" (string)
+
+     + Headers
+        Content-Type: application/json
+
+    + Body
+
+        {
+            "status": 201,
+            "data": {
+                "item": {
+                    "id": 123,
+                    "name": "Favourite programming language?",
+                    "slug-name": "something-special-two",
+                    "price": "20.80"
+                }
+            }
+        }
+
++ Response 400
+    + Attributes (object)
+       + status: 200 (number)
+       + error: "sample text" (string)
+       
+    + Headers
+        Content-Type: application/json
+        
+    + Body
+
+        {
+            "status": 400,
+            "error": "Bad requets"
+        }
+
+
+### Delete product by id [DELETE]
+delete product by id
+
++ Response 204
+    + Headers
+        Content-Type: application/json
+
++ Response 404
+    + Attributes (object)
+       + status: 200 (number)
+       + error: "sample text" (string)
+        
+    + Headers
+        Content-Type: application/json
+
+    + Body
+
+        {
+            "status": 404,
+            "error": "Element Not Found"
+        }
+
+
+
+## Questions Collection [/questions]
+
+### List All Questions [GET]
+sample info
+
++ question
++ published_at - (`date`) - date
++ age - (`number`) - user number data
++ choices - (`number`) - An array of Choice objects.
+
++ Response 200 (application/json)
+        
+    + Headers
+        Content-Type: application/json
+
+    + Body
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+
+
+## User [/user/{appId}/{userId}{?force}]
+Handle user objects
+
++ Parameters
+    + appId (required, number, `1`) ... Application ID (`appId`)
+    + userId (required, number, `1`) ... Numeric `userId` of the User object to manage
+
+### Remove an User [DELETE]
++ Parameters
+    + force (optional, boolean, `false`) ... Set to `true` to remove instead of deactivate
+
++ Response 204
+
+
+
+# Data Structures
+sample 
+
+## Place (object)
+
+- id: `fRge5` (string, required) - The unique ID of the place.
+- name: `Battery Harris` (string, required) - Name of the place.
+- lat: `40.712017` (number, required) - Latitude as a decimal.
+- lon: `-73.950995` (number, required) - Longitude as a decimal.
+- status (enum[string])
+  - pending - They haven't finished their public profile or whatever.
+  - active - Good as gold.
+  - closed - This place doesn't exist.
+- created_at: `2015-01-07T14:03:43Z` (string, required) - ISO8601 date and time of when the rider was created.
+
+## Place Create (object)
+
+- name: `Battery Harris` (string, required) - Name of the place.
+- lat: `40.712017` (number, required) - Latitude as a decimal.
+- lon: `-73.950995` (number, required) - Longitude as a decimal.
+- status (enum[string])
+  - pending - They haven't finished their public profile or whatever.
+  - active - Good as gold.
+  - closed - This place doesn't exist.
+  
+## Place Full (object)
+
+- id: `fRge5` (string, required) - The unique ID of the place.
+- Include Place Create
+- created_at: `2015-01-07T14:03:43Z` (string, required) - ISO8601 date and time of when the rider was created.
