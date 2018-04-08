@@ -1,3 +1,2 @@
 # apiary-format
 api documentation
-
